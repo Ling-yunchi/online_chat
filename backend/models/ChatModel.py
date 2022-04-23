@@ -60,7 +60,7 @@ def get_chat_room(db: Session, chat_room_id: int):
 
 def get_chat_rooms(db: Session, name: str, page: int, page_size: int):
     return db.query(ChatRoom) \
-        .filter(ChatRoom.name.like('%{}%'.format(name))) \
+        .filter(ChatRoom.name.like(f'%{name}%')) \
         .order_by(ChatRoom.created_time.desc()) \
         .offset(page * page_size) \
         .limit(page_size) \
@@ -68,7 +68,8 @@ def get_chat_rooms(db: Session, name: str, page: int, page_size: int):
 
 
 def get_messages(db: Session, chat_room_id: int, page: int, page_size: int):
-    return db.query(ChatMessage.id, User.id.label("user_id"), User.username, User.avatar, ChatMessage.message, ChatMessage.time) \
+    return db.query(ChatMessage.id, User.id.label("user_id"), User.username,
+                    User.avatar, ChatMessage.message, ChatMessage.time) \
         .join(User, ChatMessage.user_id == User.id) \
         .filter(ChatMessage.chat_room_id == chat_room_id) \
         .order_by(ChatMessage.time.desc()) \

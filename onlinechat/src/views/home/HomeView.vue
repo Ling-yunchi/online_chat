@@ -5,7 +5,7 @@
       <div class="user-name">{{ user.username }}</div>
     </div>
     <div class="user-actions">
-      <button class="btn btn-primary" @click="logout">Logout</button>
+      <el-button @click="logout">Logout</el-button>
     </div>
   </div>
   <div class="home">

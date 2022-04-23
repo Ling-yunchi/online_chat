@@ -80,7 +80,10 @@ def chat_api(sio: socketio.Server):
         session = await sio.get_session(sid)
         user_id = session['user_id']
         if user_id != data['user_id']:
-            await sio.emit('errorMessage', {'success': False, 'msg': 'Invalid user_id or room_id'}, room=sid)
+            await sio.emit('errorMessage', {
+                'success': False,
+                'msg': 'Invalid user_id or room_id'
+            }, room=sid)
             return
         user = db.query(User).filter(User.id == user_id).first()
         room_id = data['room_id']

@@ -54,17 +54,14 @@ def get_by_id(db: Session, user_id: int):
 
 
 def save(db: Session, user: User):
-    u = db.query(User).filter(User.id == user.id).first()
-    if not u:
-        db.add(user)
-        db.commit()
-    else:
+    if u := db.query(User).filter(User.id == user.id).first():
         raise Exception("User already exists")
+    db.add(user)
+    db.commit()
 
 
 def update(db: Session, user: User):
-    user = db.query(User).filter(User.id == user.id).first()
-    if user:
+    if user := db.query(User).filter(User.id == user.id).first():
         user.username = user.username
         user.password = user.password
         user.email = user.email
@@ -75,8 +72,7 @@ def update(db: Session, user: User):
 
 
 def delete(db: Session, user_id: int):
-    user = db.query(User).filter(User.id == user_id).first()
-    if user:
+    if user := db.query(User).filter(User.id == user_id).first():
         db.delete(user)
         db.commit()
     else:

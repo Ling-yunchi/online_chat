@@ -7,7 +7,7 @@
       <div class="chat-massage__name">
         {{ name }}
         <span style="margin-left: 5px; font-weight: normal; font-size: 10px">{{
-          new Date(Date.parse(time)).toISOString()
+          moment(time).utcOffset("+16:00").format("YYYY-MM-DD HH:mm:ss")
         }}</span>
       </div>
       <div class="chat-massage__text">{{ text }}</div>
@@ -15,7 +15,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import moment from "moment";
+
 export default {
   name: "ChatMassage",
   components: {},
@@ -37,6 +39,12 @@ export default {
       required: true,
     },
   },
+  setup(props: any) {
+    return {
+      moment,
+      props,
+    };
+  },
 };
 </script>
 
@@ -49,18 +57,22 @@ export default {
   background-color: #f5f5f5;
   margin-bottom: 10px;
 }
+
 .chat-massage__avatar {
   margin-right: 10px;
 }
+
 .chat-massage__content {
   display: flex;
   flex-direction: column;
 }
+
 .chat-massage__name {
   font-weight: bold;
   margin-bottom: 5px;
   text-align: left;
 }
+
 .chat-massage__text {
   text-align: left;
   max-width: 250px;

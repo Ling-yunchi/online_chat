@@ -6,9 +6,11 @@ from api import api
 from utils import database
 from utils.socket import mount_socketio
 
+# 通过数据实体创建数据库表
 database.Base.metadata.create_all(database.engine)
 
 app = FastAPI()
+# 添加跨域中间件
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,7 +27,7 @@ async def root():
         f"<center>please go to <a href='/docs'>docs</a> for more information</center>"
     )
 
-
+# 添加路由
 app.include_router(api)
-
+# 挂载socketio服务
 app = mount_socketio(app)

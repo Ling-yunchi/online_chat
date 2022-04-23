@@ -20,8 +20,7 @@ router = APIRouter(
 @router.get('/users')
 async def get_users(db: Session = Depends(get_db)):
     user_list: list[User] = db.query(User).all()
-    user_bean_list = [UserInfo(**user.__dict__) for user in user_list]
-    return user_bean_list
+    return [UserInfo(**user.__dict__) for user in user_list]
 
 
 @router.get("/username")
@@ -39,7 +38,7 @@ async def register_user(user_bean: UserBean, db: Session = Depends(get_db)):
     try:
         UserModel.save(db, user)
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists") from e
     return {"message": "User created successfully"}
 
 

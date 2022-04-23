@@ -26,15 +26,15 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button class="login-btn" type="primary" @click="login">
-              Login
-            </el-button>
             <el-button
               class="register-btn"
               type="primary"
               @click="router.push('/register')"
             >
               Register
+            </el-button>
+            <el-button class="login-btn" type="primary" @click="login">
+              Login
             </el-button>
           </el-form-item>
         </el-form>
@@ -150,7 +150,7 @@ const login = async () => {
   width: 100px;
   height: 30px;
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 30px;
   border-radius: 15px;
   border: 0;
 }
